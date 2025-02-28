@@ -14,6 +14,31 @@
         - Interface.
 - Introdução ao Flutter
     - Nativo x Multiplataforma
+        - Nativo:
+            - Android:
+                - IDE: Android Studio
+                - SDK: Android SDK
+                - Linguagens: Kotlin / Java
+                - Plaformas: Win / Linux / Mac
+            - Ios:
+                - IDE: Xcode
+                - SDK: Cocoa Touch
+                - Linguagnes: Swift / ObjC
+                - Plataformas: Mac
+        - Multiplataforma:
+            - React Native:
+                - Linguagem: JavaScript
+                - Tipos Soft: Android/Ios/Web
+                - Resultado: Nativos()
+            - Flutter: 
+                - Linguagem: Dart
+                - Tipos Soft: Android/Ios/Web/Linux/Win/Mac
+                - Resultado: Nativos()
+            - Ionic:
+                - Linguagem: JavaScript
+                - Tipos Soft: Android/Ios/Web
+                - Resultado: Emulado(RunTime)
+
     - Configuração do Ambiente de Desenvolvimento
     - Estrutura de um Aplicativo Flutter
         - Interface Linha de Comando (CLI)
