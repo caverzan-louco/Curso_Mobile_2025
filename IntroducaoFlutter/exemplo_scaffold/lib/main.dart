@@ -29,8 +29,7 @@ class MyApp extends StatelessWidget {
                   Stack(
                     alignment: Alignment.center,
                     children: [
-                      Container(qclear
-                      
+                      Container(                      
                         width: 200,
                         height: 200,
                         decoration: BoxDecoration(
