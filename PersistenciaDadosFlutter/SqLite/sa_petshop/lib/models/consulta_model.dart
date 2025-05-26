@@ -34,7 +34,7 @@ class Consulta{
       petId: map["pet_id"] as int, 
       dataHora: DateTime.parse(map["data_hora"] as String),  //converte String para DateTime
       tipoServico: map["tipo_servico"] as String,
-      observacao: map["observacao"] as String
+      observacao: map["observacao"] as String?
       );
   }
 
