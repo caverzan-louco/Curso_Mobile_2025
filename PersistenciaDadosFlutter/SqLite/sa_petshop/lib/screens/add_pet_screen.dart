@@ -11,10 +11,11 @@ class AddPetScreen extends StatefulWidget {
 }
 
 class _AddPetScreenState extends State<AddPetScreen> {
+  
   final _formKey = GlobalKey<FormState>(); //chave para o Formulário
   final _petsController = PetsController();
 
-  String _nome = "";
+  late String _nome;
   String _raca = "";
   String _nomeDono = "";
   String _telefoneDono = "";
@@ -30,12 +31,18 @@ class _AddPetScreenState extends State<AddPetScreen> {
       );
 
       //mando para o banco
-      await _petsController.addPet(newPet);
+      try {
+        await _petsController.addPet(newPet);
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Exception: $e"))
+        );
+      }
       Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen())); //Retorna para a Tela Anterior
     }
   }
 
-  @override
+  @override //build da Tela
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(

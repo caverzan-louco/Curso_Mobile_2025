@@ -8,7 +8,7 @@ import 'package:sa_petshop/screens/pet_detalhe_screen.dart';
 class AddConsultaScreen extends StatefulWidget {
   final int petId; // recebe o pet Id da Tela anterior
 
-  const AddConsultaScreen({super.key, required this.petId});
+  AddConsultaScreen({super.key, required this.petId});
 
   @override
   State<StatefulWidget> createState() {
@@ -20,13 +20,13 @@ class _AddConsultaScreenState extends State<AddConsultaScreen> {
   final _formKey = GlobalKey<FormState>();
   final ConsultasController _controllerConsulta = ConsultasController();
 
-  String tipoServico = "";
+  late String tipoServico;
   String observacao = "";
-  DateTime _selectedDate = DateTime.now();
-  TimeOfDay _selectedTime = TimeOfDay.now();
+  DateTime _selectedDate = DateTime.now(); //data Selecionada é a data atual inicalmente
+  TimeOfDay _selectedTime = TimeOfDay.now(); //hora Selecioanda é a hora atual Inicialmente
 
   // método para Seleção da Data
-  Future<void> _selectDate(BuildContext context) async {
+  Future<void> _selecionarData(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
@@ -41,7 +41,7 @@ class _AddConsultaScreenState extends State<AddConsultaScreen> {
   }
 
   // método para Seleção de hora
-  Future<void> _selectTime(BuildContext context) async {
+  Future<void> _selecionarHora(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: _selectedTime,
@@ -71,7 +71,7 @@ class _AddConsultaScreenState extends State<AddConsultaScreen> {
         petId: widget.petId,
         dataHora: finalDateTime,
         tipoServico: tipoServico,
-        observacao: observacao.isEmpty ? null : observacao, // Verifica se observacao está vazia
+        observacao: observacao.isEmpty ? "." : observacao, // Verifica se observacao está vazia
       );
 
       try {
@@ -91,8 +91,8 @@ class _AddConsultaScreenState extends State<AddConsultaScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final DateFormat dateFormatter = DateFormat("dd/MM/yyyy");
-    final DateFormat timeFormatter = DateFormat("HH:mm"); // biblioteca intl
+    final DateFormat dataFormatada = DateFormat("dd/MM/yyyy");
+    final DateFormat horaFormatada = DateFormat("HH:mm"); // biblioteca intl
 
     return Scaffold(
       appBar: AppBar(
@@ -112,9 +112,9 @@ class _AddConsultaScreenState extends State<AddConsultaScreen> {
               const SizedBox(height: 10), // Espaçamento
               Row(
                 children: [
-                  Expanded(child: Text("Data: ${dateFormatter.format(_selectedDate)}")),
+                  Expanded(child: Text("Data: ${dataFormatada.format(_selectedDate)}")),
                   TextButton(
-                    onPressed: () => _selectDate(context), // Chamada correta do método
+                    onPressed: () => _selecionarData(context), // Chamada correta do método
                     child: const Text("Selecionar Data"),
                   ),
                 ],
@@ -123,11 +123,11 @@ class _AddConsultaScreenState extends State<AddConsultaScreen> {
                 children: [
                   Expanded(
                     child: Text(
-                      "Hora: ${timeFormatter.format(DateTime(0, 0, 0, _selectedTime.hour, _selectedTime.minute))}",
+                      "Hora: ${horaFormatada.format(DateTime(0, 0, 0, _selectedTime.hour, _selectedTime.minute))}",
                     ),
                   ),
                   TextButton(
-                    onPressed: () => _selectTime(context), // Chamada correta do método
+                    onPressed: () => _selecionarHora(context), // Chamada correta do método
                     child: const Text("Selecionar Hora"),
                   ),
                 ],

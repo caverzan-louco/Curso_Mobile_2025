@@ -8,6 +8,7 @@ import 'package:sqflite/sqflite.dart';
 class PetShopDBHelper {
   static Database? _database; //obj para criar conexões
   //transformando a classe em singleton ->
+  
   //não permite instanciar outro objeto enquanto um objeto estiver ativo
   static final PetShopDBHelper _instance = PetShopDBHelper._internal();
 
@@ -38,10 +39,10 @@ class PetShopDBHelper {
     await db.execute('''
       CREATE TABLE IF NOT EXISTS pets(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nome TEXT,
-        raca TEXT,
-        nome_dono TEXT,
-        telefone_dono TEXT
+        nome TEXT NOT NULL,
+        raca TEXT NOT NULL,
+        nome_dono TEXT NOT NULL,
+        telefone_dono TEXTNOT NULL
       )
     ''');
     print("banco pets criado");
@@ -50,10 +51,10 @@ class PetShopDBHelper {
     await db.execute('''
       CREATE TABLE IF NOT EXISTS consultas(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        pet_id INTEGER,
-        data_hora TEXT, 
-        tipo_servico TEXT,
-        observacao TEXT,
+        pet_id INTEGER NOT NULL,
+        data_hora TEXT NOT NULL, 
+        tipo_servico TEXT NOT NULL,
+        observacao TEXT NOT NULL,
         FOREIGN KEY (pet_id) REFERENCES pets(id) ON DELETE CASCADE
       )
     ''');
@@ -113,7 +114,7 @@ class PetShopDBHelper {
       "consultas",
       where: "pet_id = ?",
       whereArgs: [petId],
-      // orderBy: "data_hora ASC" //ordena pela DAta/Hora
+      orderBy: "data_hora ASC" //ordena pela DAta/Hora
     );
     //converter a map para obj
     return maps.map((e) => Consulta.fromMap(e)).toList();
