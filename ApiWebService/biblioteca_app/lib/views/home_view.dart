@@ -14,7 +14,7 @@ class _HomeViewState extends State<HomeView> {
   int _index = 0;//indice de navegação da páginas
 
   final List<Widget> _pages = [
-    const BookListView(),
+    BookListView(),
     const LoanListView(),
     const UserListView()
   ];

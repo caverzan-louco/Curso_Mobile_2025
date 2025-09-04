@@ -19,40 +19,53 @@ class _UserFormViewState extends State<UserFormView> {
   final _controller = UserController();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
+  String idUser = "";
 
   @override
   void initState() {
     super.initState();
     //se for edição de usuário existente
-    if(widget.user !=null){
-    _nameController.text = widget.user!.name;
-    _emailController.text = widget.user!.email;
+    if (widget.user != null) {
+      idUser = widget.user!.id!;
+      _nameController.text = widget.user!.name;
+      _emailController.text = widget.user!.email;
     }
   }
 
-  void _save() async{
-    if(_formkey.currentState!.validate()){
+  void _save() async {
+    if (_formkey.currentState!.validate()) {
       final user = UserModel(
-        id: widget.user?.id,
-        name: _nameController.text, 
-        email: _emailController.text);
+        // criar uma id  , udsando o DATETime
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        name: _nameController.text,
+        email: _emailController.text,
+      );
       await _controller.create(user);
       Navigator.pop(context);
-      Navigator.pushReplacement(context, 
-      MaterialPageRoute(builder: (context)=> HomeView()));
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeView()),
+      );
     }
   }
 
-  void _update() async{
-    if(_formkey.currentState!.validate()){
+  void _update() async {
+    if (_formkey.currentState!.validate()) {
       final user = UserModel(
-        id: widget.user?.id,
-        name: _nameController.text, 
-        email: _emailController.text);
-      await _controller.update(user);
+        id: widget.user?.id!,
+        name: _nameController.text,
+        email: _emailController.text,
+      );
+      try {
+        await _controller.update(user);
+      } catch (e) {
+        //tratar
+      }
       Navigator.pop(context);
-      Navigator.pushReplacement(context, 
-      MaterialPageRoute(builder: (context)=> HomeView()));
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeView()),
+      );
     }
   }
 
@@ -60,9 +73,9 @@ class _UserFormViewState extends State<UserFormView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(
-        widget.user == null ? "Novo Usuário" : "Editar Usuário"
-      ),),
+      appBar: AppBar(
+        title: Text(widget.user == null ? "Novo Usuário" : "Editar Usuário"),
+      ),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Form(
@@ -72,19 +85,22 @@ class _UserFormViewState extends State<UserFormView> {
               TextFormField(
                 controller: _nameController,
                 decoration: InputDecoration(labelText: "Nome"),
-                validator: (value) => value!.isEmpty? "Informe o nome": null,
+                validator: (value) => value!.isEmpty ? "Informe o nome" : null,
               ),
               TextFormField(
                 controller: _emailController,
                 decoration: InputDecoration(labelText: "Email"),
-                validator: (value) => value!.isEmpty? "Informe o email": null,
+                validator: (value) => value!.isEmpty ? "Informe o email" : null,
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: widget.user == null ? _save : _update,
-                child: Text(widget.user == null ? "Salvar" : "Atualizar"))
+                child: Text(widget.user == null ? "Salvar" : "Atualizar"),
+              ),
             ],
-          )),),
+          ),
+        ),
+      ),
     );
   }
 }

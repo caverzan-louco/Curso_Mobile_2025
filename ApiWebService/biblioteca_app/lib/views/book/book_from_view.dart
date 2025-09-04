@@ -4,13 +4,11 @@ import 'package:biblioteca_app/views/home_view.dart';
 
 import 'package:flutter/material.dart';
 
-class BookFromView extends StatefulWidget {
+class BookFormView extends StatefulWidget {
   //atributo
   final BookModel? book;
 
-  const BookFromView({super.key}); //pode ser nulo
-
-  const BookFormView({super.key, this.book});
+   BookFormView({super.key, this.book}); //pode ser nulo
 
   @override
   State<BookFormView> createState() => _BookFormViewState();
